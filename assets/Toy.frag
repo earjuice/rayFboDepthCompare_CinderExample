@@ -59,9 +59,9 @@ vec2 opU( vec2 d1, vec2 d2 )
 
 
 float distanceToNearestSurface(vec3 p){
-  //  vec2 res = opU( vec2( sdBox( p,vec3(5.)), 1.0 ),
-  //                 vec2( sdSphere(    p-vec3( 20,0, 0.0), 5. ), 1. ) );
-    return sdSphere(    p-vec3( 20,0, 0.0), 5. );//res.x;//sdBox(p,vec3(10.));
+    vec2 res = opU( vec2( sdBox( p +vec3( sin(iGlobalTime)*5. ,0.,0.),vec3(2.5)), 1.0 ),
+                   vec2( sdSphere(    p-vec3( 20,0, 0.0), 5. ), 1. ) );
+    return   res.x;//sdBox(p,vec3(10.));
 }
 
 // better normal implementation with half the sample points

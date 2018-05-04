@@ -124,11 +124,19 @@ void rayDepthApp::createPlane()
     mPlane = Batch::create( plane, mToyShader);
 }
 void rayDepthApp::createFbo(FboRef &sFbo,ivec2 size){
+    Texture2d::Format depthFormat;
+    depthFormat.setInternalFormat( GL_DEPTH_COMPONENT32F );
+    //  depthFormat.setCompareMode( GL_COMPARE_REF_TO_TEXTURE );
+    // depthFormat.setMagFilter( GL_LINEAR );
+    // depthFormat.setMinFilter( GL_LINEAR );
+    depthFormat.setWrap( GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE );
+    depthFormat.setCompareFunc( GL_LEQUAL );
+    
     gl::Texture::Format tfmt;
     tfmt.setMagFilter( GL_LINEAR );
     gl::Fbo::Format fmt;
     fmt.setColorTextureFormat( tfmt );
-    fmt.depthTexture();
+    fmt.depthTexture(depthFormat);
     fmt.attachment( GL_COLOR_ATTACHMENT0, gl::Texture2d::create( size.x,size.y ) );
     fmt.attachment( GL_COLOR_ATTACHMENT1, gl::Texture2d::create( size.x,size.y ) );
     sFbo = gl::Fbo::create( size.x, size.y, fmt );
