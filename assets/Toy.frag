@@ -90,6 +90,8 @@ vec4 intersectWithWorld(vec3 p, vec3 dir){
             vec3 light = vec3(100.0*sin(iGlobalTime), 30.0*cos(iGlobalTime), 50.0*cos(iGlobalTime));
             result = vec4(vec3(computeLambert(hit, computeSurfaceNormal(hit), light)),dist);
             break;
+        }else{
+            result=vec4(0.,0.,0.,1000.);
         }
         dist += nearest;
     }
@@ -102,7 +104,7 @@ void main(void )
     uv*=.5;
     uv.x *= uAspectRatio;
     
-    highp vec3 rayOrigin = uCameraPosition*2.;
+    highp vec3 rayOrigin = uCameraPosition;
     vec3 rayDirection = uCameraOrientation * normalize( vec3( uv, -uViewDistance ) );
     vec4 pixelColour= intersectWithWorld(rayOrigin, rayDirection);// raymarched scene
 
