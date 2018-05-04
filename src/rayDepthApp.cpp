@@ -124,27 +124,14 @@ void rayDepthApp::createPlane()
     mPlane = Batch::create( plane, mToyShader);
 }
 void rayDepthApp::createFbo(FboRef &sFbo,ivec2 size){
-    //ivec2 size = getWindowSize()*ivec2(2);
-    Texture2d::Format depthFormat;
-    depthFormat.setInternalFormat( GL_DEPTH_COMPONENT32F );
-    depthFormat.setCompareMode( GL_COMPARE_REF_TO_TEXTURE );
-    depthFormat.setMagFilter( GL_LINEAR );
-    depthFormat.setMinFilter( GL_LINEAR );
-    depthFormat.setWrap( GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE );
-    depthFormat.setCompareFunc( GL_LEQUAL );
-    
-    
-    Texture::Format tfmt;
+    gl::Texture::Format tfmt;
     tfmt.setMagFilter( GL_LINEAR );
-    Fbo::Format fmt;
+    gl::Fbo::Format fmt;
     fmt.setColorTextureFormat( tfmt );
-    //fmt.enableDepthBuffer(true);
     fmt.depthTexture();
-    //fmt.attachment( GL_DEPTH_ATTACHMENT, Texture2d::create( size.x,size.y , depthFormat ) );
-    // fmt.setSamples( 8 );
-    fmt.attachment( GL_COLOR_ATTACHMENT0, Texture2d::create( size.x,size.y ) );
-    fmt.attachment( GL_COLOR_ATTACHMENT1, Texture2d::create( size.x,size.y ) );
-    sFbo = Fbo::create( size.x, size.y, fmt );
+    fmt.attachment( GL_COLOR_ATTACHMENT0, gl::Texture2d::create( size.x,size.y ) );
+    fmt.attachment( GL_COLOR_ATTACHMENT1, gl::Texture2d::create( size.x,size.y ) );
+    sFbo = gl::Fbo::create( size.x, size.y, fmt );
 }
 
 void rayDepthApp::setUniforms( GlslProgRef prog)// mostly everything but textures
